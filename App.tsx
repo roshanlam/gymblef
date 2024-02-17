@@ -1,12 +1,13 @@
 // App.tsx or any other component/screen
-import React from 'react';
+import React, {useState} from 'react';
 import { View, StyleSheet } from 'react-native';
-import CustomButton from './components/Button';
+import { CustomButton, CustomInput } from './components';
 
 const App = () => {
   const handlePress = () => {
     console.log('Button pressed!');
   };
+  const [inputValue, setInputValue] = useState('');
 
   return (
     <View style={styles.container}>
@@ -15,6 +16,14 @@ const App = () => {
         title="Click Me"
         backgroundColor="#34A853" // Google Green
         textColor="yellow" // White
+      />
+
+<CustomInput
+        value={inputValue}
+        onChangeText={setInputValue}
+        placeholder="Enter text here"
+        secureTextEntry={true}
+        // Additional props like `secureTextEntry` or `keyboardType` can be passed here
       />
     </View>
   );
