@@ -1,7 +1,7 @@
 // CustomButton.tsx
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { CustomButtonProps } from '../../types/button';
+import { CustomButtonProps } from '../../types';
 
 const CustomButton: React.FC<CustomButtonProps> = ({
     onPress,
