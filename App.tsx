@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// App.tsx or any other component/screen
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import CustomButton from './components/Button';
 
-export default function App() {
+const App = () => {
+  const handlePress = () => {
+    console.log('Button pressed!');
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <CustomButton
+        onPress={handlePress}
+        title="Click Me"
+        backgroundColor="#34A853" // Google Green
+        textColor="yellow" // White
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+
+export default App;
