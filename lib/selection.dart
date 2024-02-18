@@ -6,9 +6,12 @@ class SelectionPage extends StatefulWidget {
 }
 
 class _SelectionPageState extends State<SelectionPage> {
-  String lastSelectedFocus = '';
-  String lastSelectedLevel = '';
-  String lastSelectedNutritionGoal = '';
+  List<String> selectedSingleFocus = [];
+  List<String> selectedSingleLevel = [];
+  List<String> selectedSingleNutritionGoal = [];
+  List<String> selectedMultipleFocus = [];
+  List<String> selectedMultipleLevel = [];
+  List<String> selectedMultipleNutritionGoal = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 width: MediaQuery.of(context).size.width,
               ),
               SizedBox(height: 16.0),
-              buildFocusRow(
+              buildSingleSelectionRow(
                 label: 'What is your focus?',
                 options: [
                   'Powerlifting',
@@ -38,16 +41,16 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Cardio',
                   'Casual',
                 ],
-                lastSelected: lastSelectedFocus,
+                selected: selectedSingleFocus.isNotEmpty ? [selectedSingleFocus.last] : [],
                 onPressed: (label) {
                   setState(() {
-                    lastSelectedFocus = label;
-                    print('Selected focus: $label');
+                    selectedSingleFocus = [label];
+                    print('Selected focus: $selectedSingleFocus');
                     // Add functionality for the selection
                   });
                 },
               ),
-              buildFocusRow(
+              buildSingleSelectionRow(
                 label: 'What is your level?',
                 options: [
                   'Newbie',
@@ -55,27 +58,78 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Intermediate',
                   'Advanced',
                 ],
-                lastSelected: lastSelectedLevel,
+                selected: selectedSingleLevel.isNotEmpty ? [selectedSingleLevel.last] : [],
                 onPressed: (label) {
                   setState(() {
-                    lastSelectedLevel = label;
-                    print('Selected level: $label');
+                    selectedSingleLevel = [label];
+                    print('Selected level: $selectedSingleLevel');
                     // Add functionality for the selection
                   });
                 },
               ),
-              buildFocusRow(
+              buildSingleSelectionRow(
                 label: 'What are your nutrition goals?',
                 options: [
                   'Cutting',
                   'Stable',
                   'Bulking',
                 ],
-                lastSelected: lastSelectedNutritionGoal,
+                selected: selectedSingleNutritionGoal.isNotEmpty ? [selectedSingleNutritionGoal.last] : [],
                 onPressed: (label) {
                   setState(() {
-                    lastSelectedNutritionGoal = label;
-                    print('Selected nutrition goal: $label');
+                    selectedSingleNutritionGoal = [label];
+                    print('Selected nutrition goal: $selectedSingleNutritionGoal');
+                    // Add functionality for the selection
+                  });
+                },
+              ),
+              SizedBox(height: 16.0),
+              buildMultipleSelectionRow(
+                label: 'Select multiple focuses:',
+                options: [
+                  'Powerlifting',
+                  'Bodybuilding',
+                  'Cardio',
+                  'Casual',
+                ],
+                selected: selectedMultipleFocus,
+                onPressed: (label) {
+                  setState(() {
+                    toggleSelection(label, selectedMultipleFocus);
+                    print('Selected focuses: $selectedMultipleFocus');
+                    // Add functionality for the selection
+                  });
+                },
+              ),
+              buildMultipleSelectionRow(
+                label: 'Select multiple levels:',
+                options: [
+                  'Newbie',
+                  'Beginner',
+                  'Intermediate',
+                  'Advanced',
+                ],
+                selected: selectedMultipleLevel,
+                onPressed: (label) {
+                  setState(() {
+                    toggleSelection(label, selectedMultipleLevel);
+                    print('Selected levels: $selectedMultipleLevel');
+                    // Add functionality for the selection
+                  });
+                },
+              ),
+              buildMultipleSelectionRow(
+                label: 'Select multiple nutrition goals:',
+                options: [
+                  'Cutting',
+                  'Stable',
+                  'Bulking',
+                ],
+                selected: selectedMultipleNutritionGoal,
+                onPressed: (label) {
+                  setState(() {
+                    toggleSelection(label, selectedMultipleNutritionGoal);
+                    print('Selected nutrition goals: $selectedMultipleNutritionGoal');
                     // Add functionality for the selection
                   });
                 },
@@ -88,10 +142,10 @@ class _SelectionPageState extends State<SelectionPage> {
     );
   }
 
-  Widget buildFocusRow({
+  Widget buildSingleSelectionRow({
     required String label,
     required List<String> options,
-    required String lastSelected,
+    required List<String> selected,
     required Function(String) onPressed,
   }) {
     return Column(
@@ -108,9 +162,10 @@ class _SelectionPageState extends State<SelectionPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: options.map((option) {
-            bool isSelected = option.toLowerCase() == lastSelected.toLowerCase();
+            bool isSelected = selected.contains(option);
+            String lowerOption = option.toLowerCase();
             return FocusButton(
-              imagePath: '../gimbel_assets/$option.png',
+              imagePath: '../gimbel_assets/$lowerOption.png',
               label: option,
               onPressed: (label) {
                 onPressed(label);
@@ -122,6 +177,52 @@ class _SelectionPageState extends State<SelectionPage> {
         SizedBox(height: 16.0),
       ],
     );
+  }
+
+  Widget buildMultipleSelectionRow({
+    required String label,
+    required List<String> options,
+    required List<String> selected,
+    required Function(String) onPressed,
+  }) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 16.0),
+        Wrap(
+          spacing: 16.0,
+          runSpacing: 8.0,
+          children: options.map((option) {
+            bool isSelected = selected.contains(option);
+            String lowerOption = option.toLowerCase();
+            return FocusButton(
+              imagePath: '../gimbel_assets/$lowerOption.png',
+              label: option,
+              onPressed: (label) {
+                onPressed(label);
+              },
+              isSelected: isSelected,
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 16.0),
+      ],
+    );
+  }
+
+  void toggleSelection(String label, List<String> selectedList) {
+    if (selectedList.contains(label)) {
+      selectedList.remove(label);
+    } else {
+      selectedList.add(label);
+    }
   }
 }
 
