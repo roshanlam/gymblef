@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class FirstPage extends StatelessWidget {
+  const FirstPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -9,7 +11,7 @@ class FirstPage extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFFF6C0C)),
+          decoration: const BoxDecoration(color: Color(0xFFFF6C0C)),
           child: Stack(
             children: [
               Positioned(
@@ -18,9 +20,10 @@ class FirstPage extends StatelessWidget {
                 child: Container(
                   width: 390,
                   height: 844,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage("https://via.placeholder.com/390x844"),
+                      image:
+                          NetworkImage("https://via.placeholder.com/390x844"),
                       fit: BoxFit.fill,
                     ),
                   ),

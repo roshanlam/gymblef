@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'name.dart';
 
 class SelectionPage extends StatefulWidget {
+  const SelectionPage({super.key});
+
   @override
   _SelectionPageState createState() => _SelectionPageState();
 }
@@ -13,10 +16,19 @@ class _SelectionPageState extends State<SelectionPage> {
   List<String> selectedMultipleLevel = [];
   List<String> selectedMultipleNutritionGoal = [];
 
+  bool canProceedToNextPage() {
+    return selectedSingleFocus.isNotEmpty &&
+        selectedSingleLevel.isNotEmpty &&
+        selectedSingleNutritionGoal.isNotEmpty &&
+        selectedMultipleFocus.isNotEmpty &&
+        selectedMultipleLevel.isNotEmpty &&
+        selectedMultipleNutritionGoal.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFF6C0C),
+      backgroundColor: const Color(0xFFFF6C0C),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -29,10 +41,10 @@ class _SelectionPageState extends State<SelectionPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                '../gimbel_assets/top.png',
+                'gimbel_assets/top.png',
                 width: MediaQuery.of(context).size.width,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               buildSingleSelectionRow(
                 label: 'What is your focus?',
                 options: [
@@ -41,7 +53,9 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Cardio',
                   'Casual',
                 ],
-                selected: selectedSingleFocus.isNotEmpty ? [selectedSingleFocus.last] : [],
+                selected: selectedSingleFocus.isNotEmpty
+                    ? [selectedSingleFocus.last]
+                    : [],
                 onPressed: (label) {
                   setState(() {
                     selectedSingleFocus = [label];
@@ -58,7 +72,9 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Intermediate',
                   'Advanced',
                 ],
-                selected: selectedSingleLevel.isNotEmpty ? [selectedSingleLevel.last] : [],
+                selected: selectedSingleLevel.isNotEmpty
+                    ? [selectedSingleLevel.last]
+                    : [],
                 onPressed: (label) {
                   setState(() {
                     selectedSingleLevel = [label];
@@ -74,18 +90,21 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Stable',
                   'Bulking',
                 ],
-                selected: selectedSingleNutritionGoal.isNotEmpty ? [selectedSingleNutritionGoal.last] : [],
+                selected: selectedSingleNutritionGoal.isNotEmpty
+                    ? [selectedSingleNutritionGoal.last]
+                    : [],
                 onPressed: (label) {
                   setState(() {
                     selectedSingleNutritionGoal = [label];
-                    print('Selected nutrition goal: $selectedSingleNutritionGoal');
+                    print(
+                        'Selected nutrition goal: $selectedSingleNutritionGoal');
                     // Add functionality for the selection
                   });
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               buildMultipleSelectionRow(
-                label: 'Select your ideal buddy\'s focuses:',
+                label: 'Select multiple focuses:',
                 options: [
                   'Powerlifting',
                   'Bodybuilding',
@@ -102,7 +121,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 },
               ),
               buildMultipleSelectionRow(
-                label: 'Select your ideal buddy\'s level:',
+                label: 'Select multiple levels:',
                 options: [
                   'Newbie',
                   'Beginner',
@@ -119,7 +138,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 },
               ),
               buildMultipleSelectionRow(
-                label: 'Select your ideal buddy\'s nutritional goals:',
+                label: 'Select multiple nutrition goals:',
                 options: [
                   'Cutting',
                   'Stable',
@@ -129,10 +148,23 @@ class _SelectionPageState extends State<SelectionPage> {
                 onPressed: (label) {
                   setState(() {
                     toggleSelection(label, selectedMultipleNutritionGoal);
-                    print('Selected nutrition goals: $selectedMultipleNutritionGoal');
+                    print(
+                        'Selected nutrition goals: $selectedMultipleNutritionGoal');
                     // Add functionality for the selection
                   });
                 },
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: canProceedToNextPage()
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NamePage()),
+                        );
+                      }
+                    : null,
+                child: const Text('Go to Name Page'),
               ),
               // Add more FocusButtons for additional selections as needed
             ],
@@ -152,20 +184,20 @@ class _SelectionPageState extends State<SelectionPage> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: options.map((option) {
             bool isSelected = selected.contains(option);
             String lowerOption = option.toLowerCase();
             return FocusButton(
-              imagePath: '../gimbel_assets/$lowerOption.png',
+              imagePath: 'gimbel_assets/$lowerOption.png',
               label: option,
               onPressed: (label) {
                 onPressed(label);
@@ -174,7 +206,7 @@ class _SelectionPageState extends State<SelectionPage> {
             );
           }).toList(),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -189,21 +221,20 @@ class _SelectionPageState extends State<SelectionPage> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16.0),
-        Wrap(
-          spacing: 16.0,
-          runSpacing: 8.0,
+        const SizedBox(height: 16.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: options.map((option) {
             bool isSelected = selected.contains(option);
             String lowerOption = option.toLowerCase();
             return FocusButton(
-              imagePath: '../gimbel_assets/$lowerOption.png',
+              imagePath: 'gimbel_assets/$lowerOption.png',
               label: option,
               onPressed: (label) {
                 onPressed(label);
@@ -212,7 +243,7 @@ class _SelectionPageState extends State<SelectionPage> {
             );
           }).toList(),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -232,7 +263,7 @@ class FocusButton extends StatelessWidget {
   final Function(String)? onPressed;
   final bool isSelected;
 
-  const FocusButton({
+  const FocusButton({super.key, 
     required this.imagePath,
     required this.label,
     this.onPressed,
@@ -266,10 +297,10 @@ class FocusButton extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 14.0,
           ),
