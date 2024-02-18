@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gymblef/selection.dart';
 import 'login.dart'; // import the login.dart file
-import 'dart:async';
+import './components/util.dart';
+import './components/popup.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -13,14 +15,27 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        const Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    LoginPage()))); // navigate to Login screen
+    _checkLogin();
   }
+
+  void _checkLogin() async {
+    bool isValid = await checkLoginToken();
+    showErrorDialog(context: context, errorMessage: 'Checked Login');
+    if (isValid) {
+      // If the login is valid, navigate to another page.
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => SelectionPage()),
+      );
+    } else {
+      // If the login is not valid, navigate to the LoginPage.
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
