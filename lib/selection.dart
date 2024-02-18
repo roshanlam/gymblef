@@ -158,9 +158,9 @@ class _SelectionPageState extends State<SelectionPage> {
               ElevatedButton(
                 onPressed: canProceedToNextPage()
                     ? () {
-                        /*Navigator.push(
+                        Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => NamePage()),
+                          MaterialPageRoute(builder: (context) => HomePage()),
                         );
                       }
                     : null,
