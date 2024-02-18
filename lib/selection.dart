@@ -55,7 +55,7 @@ class _SelectionPageState extends State<SelectionPage> {
                     ? [selectedSingleFocus.last]
                     : [],
                 onPressed: (label) {
-                  setState(() async {
+                  setState(() {
                     selectedSingleFocus = [label];
                     print('Selected focus: $selectedSingleFocus');
                     // Add functionality for the selection
