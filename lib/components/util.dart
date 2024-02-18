@@ -1,9 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 Future<bool> checkLoginToken() async {
-  final storage = new FlutterSecureStorage();
+  const storage = FlutterSecureStorage();
   String? token = await storage.read(key: 'auth_token');
 
   if (token != null) {

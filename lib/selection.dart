@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'name.dart';
+import 'home.dart';
 
 class SelectionPage extends StatefulWidget {
   const SelectionPage({super.key});
@@ -160,7 +160,7 @@ class _SelectionPageState extends State<SelectionPage> {
                     ? () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => NamePage()),
+                          MaterialPageRoute(builder: (context) => HomePage()),
                         );
                       }
                     : null,
