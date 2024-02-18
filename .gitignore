@@ -33,3 +33,9 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+build
+.dart_tool
+build/f4da31578bf74e160393d588ebd02ee2.cache.dill.track.dill
+.dart_tool/package_config.json
+.dart_tool/package_config_subset

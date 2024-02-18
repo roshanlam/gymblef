@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'selection.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -82,12 +85,44 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _signIn(BuildContext context) {
-    // You should replace this with your actual authentication logic
-    // For simplicity, always consider it a successful login for now
-    bool isSignInSuccessful = true;
+  void _register(BuildContext context) async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    var url = Uri.parse('http://159.203.142.48:8000/auth/register');
+    var response = await http.post(url, body: { 'email': email, 'password': password });
+
+    var responseJSON = jsonDecode(response.body);
+    bool isRegistrationSuccessful = responseJSON['success'];
+
+    if (isRegistrationSuccessful) {
+      final storage = FlutterSecureStorage();
+      await storage.write(key: 'auth_token', value: responseJSON['token']);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => SelectionPage()),
+      );
+    } else {
+      // Handle unsuccessful registration
+      // You can show an error message or take appropriate action
+    }
+  }
+
+  void _signIn(BuildContext context) async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    var url = Uri.parse('http://159.203.142.48:8000/auth/login');
+    var response = await http.post(url, body: { 'email': email, 'password': password });
+
+    var responseJSON = jsonDecode(response.body);
+    bool isSignInSuccessful = responseJSON['success'];
 
     if (isSignInSuccessful) {
+      final storage = FlutterSecureStorage();
+      await storage.write(key: 'auth_token', value: responseJSON['token']);
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => SelectionPage()),
