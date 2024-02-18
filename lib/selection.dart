@@ -85,7 +85,7 @@ class _SelectionPageState extends State<SelectionPage> {
               ),
               SizedBox(height: 16.0),
               buildMultipleSelectionRow(
-                label: 'Select multiple focuses:',
+                label: 'Select your ideal buddy\'s focuses:',
                 options: [
                   'Powerlifting',
                   'Bodybuilding',
@@ -102,7 +102,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 },
               ),
               buildMultipleSelectionRow(
-                label: 'Select multiple levels:',
+                label: 'Select your ideal buddy\'s level:',
                 options: [
                   'Newbie',
                   'Beginner',
@@ -119,7 +119,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 },
               ),
               buildMultipleSelectionRow(
-                label: 'Select multiple nutrition goals:',
+                label: 'Select your ideal buddy\'s nutritional goals:',
                 options: [
                   'Cutting',
                   'Stable',
