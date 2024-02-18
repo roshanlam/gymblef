@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => NamePage()),
+        MaterialPageRoute(builder: (context) => const NamePage()),
       );
     } else {
       showErrorDialog(

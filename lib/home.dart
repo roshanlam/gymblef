@@ -1,47 +1,54 @@
 import 'package:flutter/material.dart';
+import 'profile.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF6C0C), // Orange background color
+        backgroundColor: const Color(0xFFFF6C0C), // Orange background color
       ),
-      body: ProductCard(),
-      bottomNavigationBar: BottomNavBar(),
+      body: const ProductCard(),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }
 
 class ProductCard extends StatelessWidget {
+  const ProductCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFFF6C0C), // Orange background color
-      padding: EdgeInsets.all(16.0),
+      color: const Color(0xFFFF6C0C), // Orange background color
+      padding: const EdgeInsets.all(16.0),
       child: Card(
         elevation: 5.0,
         color: Colors.white, // White card background color
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,6 +110,8 @@ class ProductCard extends StatelessWidget {
 }
 
 class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -122,9 +131,19 @@ class BottomNavBar extends StatelessWidget {
           label: 'Messages',
         ),
         BottomNavigationBarItem(
-          icon: Image.asset(
-            'gimbel_assets/newbie.png', // Replace with your profile icon image path
-            height: 30, // Adjust the height as needed
+          icon: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>  const ProfilePage(),
+                ),
+              );
+            },
+            child: Image.asset(
+              'gimbel_assets/newbie.png', // Replace with your profile icon image path
+              height: 30, // Adjust the height as needed
+            ),
           ),
           label: 'Profile',
         ),

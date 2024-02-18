@@ -20,7 +20,7 @@ class _SelectionPageState extends State<SelectionPage> {
   List<String> selectedTargetFocus = [];
   List<String> selectedTargetLevel = [];
   List<String> selectedTargetNutritionGoal = [];
-  final _storage = FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
   bool canProceedToNextPage() {
     return selectedSingleFocus.isNotEmpty &&
@@ -175,7 +175,7 @@ class _SelectionPageState extends State<SelectionPage> {
               ElevatedButton(
                 onPressed: canProceedToNextPage()
                     ? () async {
-                        final storage = FlutterSecureStorage();
+                        const storage = FlutterSecureStorage();
 
                         var data = {
                           '_id': await storage.read(key: '_id'),
@@ -199,6 +199,7 @@ class _SelectionPageState extends State<SelectionPage> {
                         String? name = await storage.read(key: 'Name');
                         print('Email from storage: $email');
                         print('Name from storage: $name');
+                        print('Name from storage: $name');
 
                         var url =
                             Uri.parse('http://159.203.142.48:8000/UserInfo');
@@ -209,12 +210,12 @@ class _SelectionPageState extends State<SelectionPage> {
                         if (response.statusCode == 200) {
                           print('User info updated successfully');
                         } else {
-                          throw Exception('Failed to update user info');
+                          // throw Exception('Failed to update user info');
                         }
-                    
+
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(builder: (context) => const HomePage()),
                         );
                       }
                     : null,
