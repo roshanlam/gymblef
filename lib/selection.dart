@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
-class SelectionPage extends StatelessWidget {
+class SelectionPage extends StatefulWidget {
+  @override
+  _SelectionPageState createState() => _SelectionPageState();
+}
+
+class _SelectionPageState extends State<SelectionPage> {
+  String lastSelectedFocus = '';
+  String lastSelectedLevel = '';
+  String lastSelectedNutritionGoal = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,135 +30,55 @@ class SelectionPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
               ),
               SizedBox(height: 16.0),
-              Text(
-                'What is your focus?',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FocusButton(
-                    imagePath: '../gimbel_assets/lifting.png',
-                    label: 'Powerlifting',
-                    onPressed: (label) {
-                      print('Selected focus: $label.toLowerCase( )');
-                      // Add functionality for the first selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/bodybuilding.png',
-                    label: 'Bodybuilding',
-                    onPressed: (label) {
-                      print('Selected focus: $label.toLowerCase( )');
-                      // Add functionality for the second selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/cardio.png',
-                    label: 'Cardio',
-                    onPressed: (label) {
-                      print('Selected focus: $label.toLowerCase( )');
-                      // Add functionality for the third selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/casual.png',
-                    label: 'Casual',
-                    onPressed: (label) {
-                      print('Selected focus: $label.toLowerCase( )');
-                      // Add functionality for the fourth selection
-                    },
-                  ),
+              buildFocusRow(
+                label: 'What is your focus?',
+                options: [
+                  'Powerlifting',
+                  'Bodybuilding',
+                  'Cardio',
+                  'Casual',
                 ],
+                lastSelected: lastSelectedFocus,
+                onPressed: (label) {
+                  setState(() {
+                    lastSelectedFocus = label;
+                    print('Selected focus: $label');
+                    // Add functionality for the selection
+                  });
+                },
               ),
-              Text(
-                'What is your level?',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FocusButton(
-                    imagePath: '../gimbel_assets/profile.png',
-                    label: 'Newbie',
-                    onPressed: (label) {
-                      print('Selected level: $label.toLowerCase( )');
-                      // Add functionality for the first selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/beginner.png',
-                    label: 'Beginner',
-                    onPressed: (label) {
-                      print('Selected level: $label.toLowerCase( )');
-                      // Add functionality for the second selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/intermediate.png',
-                    label: 'Intermediate',
-                    onPressed: (label) {
-                      print('Selected level: $label.toLowerCase( )');
-                      // Add functionality for the third selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/advanced.png',
-                    label: 'Advanced',
-                    onPressed: (label) {
-                      print('Selected level: $label.toLowerCase( )');
-                      // Add functionality for the fourth selection
-                    },
-                  ),
+              buildFocusRow(
+                label: 'What is your level?',
+                options: [
+                  'Newbie',
+                  'Beginner',
+                  'Intermediate',
+                  'Advanced',
                 ],
+                lastSelected: lastSelectedLevel,
+                onPressed: (label) {
+                  setState(() {
+                    lastSelectedLevel = label;
+                    print('Selected level: $label');
+                    // Add functionality for the selection
+                  });
+                },
               ),
-              Text(
-                'What are your nutrition goals?',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FocusButton(
-                    imagePath: '../gimbel_assets/wheat.png',
-                    label: 'Cutting',
-                    onPressed: (label) {
-                      print('Selected nutrition goal: $label.toLowerCase( )');
-                      // Add functionality for the first selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/fruit_bowl.png',
-                    label: 'Stable',
-                    onPressed: (label) {
-                      print('Selected nutrition goal: $label.toLowerCase( )');
-                      // Add functionality for the second selection
-                    },
-                  ),
-                  FocusButton(
-                    imagePath: '../gimbel_assets/burger.png',
-                    label: 'Bulking',
-                    onPressed: (label) {
-                      print('Selected nutrition goal: $label.toLowerCase( )');
-                      // Add functionality for the third selection
-                    },
-                  ),
+              buildFocusRow(
+                label: 'What are your nutrition goals?',
+                options: [
+                  'Cutting',
+                  'Stable',
+                  'Bulking',
                 ],
+                lastSelected: lastSelectedNutritionGoal,
+                onPressed: (label) {
+                  setState(() {
+                    lastSelectedNutritionGoal = label;
+                    print('Selected nutrition goal: $label');
+                    // Add functionality for the selection
+                  });
+                },
               ),
               // Add more FocusButtons for additional selections as needed
             ],
@@ -158,17 +87,55 @@ class SelectionPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildFocusRow({
+    required String label,
+    required List<String> options,
+    required String lastSelected,
+    required Function(String) onPressed,
+  }) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 16.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: options.map((option) {
+            bool isSelected = option.toLowerCase() == lastSelected.toLowerCase();
+            return FocusButton(
+              imagePath: '../gimbel_assets/$option.png',
+              label: option,
+              onPressed: (label) {
+                onPressed(label);
+              },
+              isSelected: isSelected,
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 16.0),
+      ],
+    );
+  }
 }
 
 class FocusButton extends StatelessWidget {
   final String imagePath;
   final String label;
   final Function(String)? onPressed;
+  final bool isSelected;
 
   const FocusButton({
     required this.imagePath,
     required this.label,
     this.onPressed,
+    required this.isSelected,
   });
 
   @override
@@ -182,11 +149,15 @@ class FocusButton extends StatelessWidget {
             }
           },
           child: Container(
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white,
+              color: isSelected ? Colors.white : Colors.transparent,
+              border: Border.all(
+                color: isSelected ? Colors.black : Colors.white,
+                width: 2.0,
+              ),
               image: DecorationImage(
                 image: AssetImage(imagePath),
                 fit: BoxFit.cover,
