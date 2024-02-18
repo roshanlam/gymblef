@@ -29,10 +29,10 @@ class _SelectionPageState extends State<SelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFF6C0C),
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-      ),
+      ),*/
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -263,7 +263,8 @@ class FocusButton extends StatelessWidget {
   final Function(String)? onPressed;
   final bool isSelected;
 
-  const FocusButton({super.key, 
+  const FocusButton({
+    super.key,
     required this.imagePath,
     required this.label,
     this.onPressed,
