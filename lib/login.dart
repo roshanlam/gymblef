@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymblef/components/popup.dart';
+import 'name.dart';
 import 'selection.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -69,9 +70,10 @@ class LoginPage extends StatelessWidget {
                 onPressed: () {
                   // For simplicity, assume successful login
                   // You should replace this with your actual authentication logic
-                  _signIn(context);
+                  _register(context);
                 },
-                child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
+                child: const Text('Sign Up',
+                    style: TextStyle(color: Colors.white)),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -79,7 +81,8 @@ class LoginPage extends StatelessWidget {
                   // You should replace this with your actual authentication logic
                   _signIn(context);
                 },
-                child: const Text('Login', style: TextStyle(color: Colors.white)),
+                child:
+                    const Text('Login', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
@@ -93,7 +96,8 @@ class LoginPage extends StatelessWidget {
     String password = passwordController.text;
 
     var url = Uri.parse('http://159.203.142.48:8000/auth/register');
-    var response = await http.post(url, body: { 'email': email, 'password': password });
+    var response =
+        await http.post(url, body: {'email': email, 'password': password});
 
     var responseJSON = jsonDecode(response.body);
     bool isRegistrationSuccessful = responseJSON['success'];
@@ -104,11 +108,15 @@ class LoginPage extends StatelessWidget {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SelectionPage()),
+        //MaterialPageRoute(builder: (context) => SelectionPage()),
+        MaterialPageRoute(builder: (context) => NamePage()),
       );
     } else {
-      // Handle unsuccessful registration
-      // You can show an error message or take appropriate action
+      /*showErrorDialog(
+        context: context,
+        errorMessage: 'Invalid email or password',
+        title: 'Sign-up failed',
+      );*/
     }
   }
 
@@ -117,7 +125,8 @@ class LoginPage extends StatelessWidget {
     String password = passwordController.text;
 
     var url = Uri.parse('http://159.203.142.48:8000/auth/login');
-    var response = await http.post(url, body: { 'email': email, 'password': password });
+    var response =
+        await http.post(url, body: {'email': email, 'password': password});
 
     var responseJSON = jsonDecode(response.body);
     bool isSignInSuccessful = responseJSON['success'];
@@ -128,16 +137,16 @@ class LoginPage extends StatelessWidget {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const SelectionPage()),
+        MaterialPageRoute(builder: (context) => NamePage()),
       );
     } else {
       // Handle unsuccessful sign-in
       // You can show an error message or take appropriate action
-      showErrorDialog(
+      /*showErrorDialog(
         context: context,
         errorMessage: 'Invalid email or password',
         title: 'Sign-in failed',
-      );
+      );*/
     }
   }
 }

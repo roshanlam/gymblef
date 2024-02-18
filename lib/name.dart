@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'selection.dart';
 
-class NamePage extends StatelessWidget {
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController preferredNameController = TextEditingController();
+class NamePage extends StatefulWidget {
+  NamePage({Key? key}) : super(key: key);
+
+  @override
+  _NamePageState createState() => _NamePageState();
+}
+
+class _NamePageState extends State<NamePage> {
+  final TextEditingController NameController = TextEditingController();
+  final _storage = FlutterSecureStorage();
+
   final List<String> genderOptions = ['Male', 'Female', 'Other'];
-  String selectedGender = '';
+  String? selectedGender;
 
-  NamePage({super.key});
+  Future<void> loadData() async {
+    final Name = await _storage.read(key: 'Name');
+    final selectedGender = await _storage.read(key: 'selectedGender');
+
+    setState(() {
+      NameController.text = Name ?? '';
+      this.selectedGender = selectedGender;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,28 +42,32 @@ class NamePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                '../gimbel_assets/top.png',
+                'gimbel_assets/top.png',
                 width: MediaQuery.of(context).size.width,
               ),
               const SizedBox(height: 16.0),
-              buildTextField('First Name', firstNameController),
-              buildTextField('Last Name', lastNameController),
-              buildTextField('Preferred Name', preferredNameController),
+              buildTextField('Name', NameController),
               buildGenderDropdown(),
               const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Validate inputs and proceed if valid
                   if (validateInputs()) {
                     // Add logic to process user inputs
-                    print('First Name: ${firstNameController.text}');
-                    print('Last Name: ${lastNameController.text}');
-                    print('Preferred Name: ${preferredNameController.text}');
-                    print('Selected Gender: $selectedGender');
+                    await _storage.write(
+                        key: 'Name', value: NameController.text);
+                    await _storage.write(
+                        key: 'selectedGender', value: selectedGender);
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => SelectionPage()),
+                    );
                   }
                 },
-                child: const Text('Submit'),
-              ),
+                // put NameController text and selectedGender in the list of dependencies
+                child: Text('Proceed'),
+              )
             ],
           ),
         ),
@@ -74,7 +95,7 @@ class NamePage extends StatelessWidget {
   Widget buildGenderDropdown() {
     return SizedBox(
       height: 80.0,
-      child: DropdownButtonFormField(
+      child: DropdownButtonFormField<String>(
         decoration: const InputDecoration(
           labelText: 'Gender',
           labelStyle: TextStyle(color: Colors.black),
@@ -83,23 +104,24 @@ class NamePage extends StatelessWidget {
           border: OutlineInputBorder(),
         ),
         value: selectedGender,
+        style: const TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight
+                .bold), // This ensures the selected value text is black
         items: genderOptions.map((gender) {
-          return DropdownMenuItem(
+          return DropdownMenuItem<String>(
             value: gender,
-            child: Text(gender),
+            child: Text(
+              gender,
+            ),
           );
         }).toList(),
-        onChanged: (value) {
-          selectedGender = value.toString();
-        },
+        onChanged: (value) => setState(() => selectedGender = value),
+        hint: const Text('Select Gender'),
       ),
     );
   }
 
-  bool validateInputs() {
-    return firstNameController.text.isNotEmpty &&
-        lastNameController.text.isNotEmpty &&
-        preferredNameController.text.isNotEmpty &&
-        selectedGender.isNotEmpty;
-  }
+  bool validateInputs() =>
+      NameController.text.isNotEmpty && selectedGender!.isNotEmpty;
 }
