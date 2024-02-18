@@ -34,30 +34,34 @@ class SelectionPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FocusButton(
-                    imagePath: '../gibel_assets/lifting.png',
-                    buttonText: 'Powerlifting',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/lifting.png',
+                    label: 'Powerlifting',
+                    onPressed: (label) {
+                      print('Selected focus: $label.toLowerCase( )');
                       // Add functionality for the first selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/bodybuilding.png',
-                    buttonText: 'Bodybuilding',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/bodybuilding.png',
+                    label: 'Bodybuilding',
+                    onPressed: (label) {
+                      print('Selected focus: $label.toLowerCase( )');
                       // Add functionality for the second selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/cardio.png',
-                    buttonText: 'Cardio',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/cardio.png',
+                    label: 'Cardio',
+                    onPressed: (label) {
+                      print('Selected focus: $label.toLowerCase( )');
                       // Add functionality for the third selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/casual.png',
-                    buttonText: 'Casual',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/casual.png',
+                    label: 'Casual',
+                    onPressed: (label) {
+                      print('Selected focus: $label.toLowerCase( )');
                       // Add functionality for the fourth selection
                     },
                   ),
@@ -76,30 +80,34 @@ class SelectionPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FocusButton(
-                    imagePath: '../gibel_assets/profile.png',
-                    buttonText: 'Newbie',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/profile.png',
+                    label: 'Newbie',
+                    onPressed: (label) {
+                      print('Selected level: $label.toLowerCase( )');
                       // Add functionality for the first selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/beginner.png',
-                    buttonText: 'Beginner',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/beginner.png',
+                    label: 'Beginner',
+                    onPressed: (label) {
+                      print('Selected level: $label.toLowerCase( )');
                       // Add functionality for the second selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/intermediate.png',
-                    buttonText: 'Intermediate',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/intermediate.png',
+                    label: 'Intermediate',
+                    onPressed: (label) {
+                      print('Selected level: $label.toLowerCase( )');
                       // Add functionality for the third selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/advanced.png',
-                    buttonText: 'Advanced',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/advanced.png',
+                    label: 'Advanced',
+                    onPressed: (label) {
+                      print('Selected level: $label.toLowerCase( )');
                       // Add functionality for the fourth selection
                     },
                   ),
@@ -118,23 +126,26 @@ class SelectionPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FocusButton(
-                    imagePath: '../gibel_assets/wheat.png',
-                    buttonText: 'Cutting',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/wheat.png',
+                    label: 'Cutting',
+                    onPressed: (label) {
+                      print('Selected nutrition goal: $label.toLowerCase( )');
                       // Add functionality for the first selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/fruit_bowl.png',
-                    buttonText: 'Stable',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/fruit_bowl.png',
+                    label: 'Stable',
+                    onPressed: (label) {
+                      print('Selected nutrition goal: $label.toLowerCase( )');
                       // Add functionality for the second selection
                     },
                   ),
                   FocusButton(
-                    imagePath: '../gibel_assets/burger.png',
-                    buttonText: 'Bulking',
-                    onPressed: () {
+                    imagePath: '../gimbel_assets/burger.png',
+                    label: 'Bulking',
+                    onPressed: (label) {
+                      print('Selected nutrition goal: $label.toLowerCase( )');
                       // Add functionality for the third selection
                     },
                   ),
@@ -151,12 +162,12 @@ class SelectionPage extends StatelessWidget {
 
 class FocusButton extends StatelessWidget {
   final String imagePath;
-  final String buttonText;
-  final VoidCallback? onPressed;
+  final String label;
+  final Function(String)? onPressed;
 
   const FocusButton({
     required this.imagePath,
-    required this.buttonText,
+    required this.label,
     this.onPressed,
   });
 
@@ -165,10 +176,14 @@ class FocusButton extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: onPressed,
+          onTap: () {
+            if (onPressed != null) {
+              onPressed!(label);
+            }
+          },
           child: Container(
-            width: 100,
-            height: 100,
+            width: 80,
+            height: 80,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
@@ -181,10 +196,10 @@ class FocusButton extends StatelessWidget {
         ),
         SizedBox(height: 8.0),
         Text(
-          buttonText,
+          label,
           style: TextStyle(
             color: Colors.black,
-            fontSize: 16.0,
+            fontSize: 14.0,
           ),
         ),
       ],
