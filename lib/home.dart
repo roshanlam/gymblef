@@ -10,15 +10,21 @@ void main() {
 }
 
 int currentIndex = 0;
-Future<String> getNextMatch() async {
+dynamic getAllMatches() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
   var email = (await storage.read(key: 'email')) ?? '';
 
   var url = Uri.parse('http://159.203.142.48:8000/user/getBuddies');
   var response = await http.get(url, headers: { 'email': email });
   var responseJSON = jsonDecode(response.body);
+
   var matchingUsers = responseJSON['matchingUsers'];
-  return matchingUsers[currentIndex++ % matchingUsers.length]['email'];
+  matchingUsers.sort((a, b) => b.compatibility.compareTo(a.compatibility));
+  return matchingUsers;
+}
+dynamic getNextMatch() async {
+  var matchingUsers = await getAllMatches();
+  return matchingUsers[currentIndex++ % matchingUsers.length];
 }
 
 
