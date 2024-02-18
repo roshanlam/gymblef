@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:gymblef/components/util.dart';
 
 class SelectionPage extends StatefulWidget {
   const SelectionPage({super.key});
@@ -24,6 +28,21 @@ class _SelectionPageState extends State<SelectionPage> {
         selectedTargetFocus.isNotEmpty &&
         selectedTargetLevel.isNotEmpty &&
         selectedTargetNutritionGoal.isNotEmpty;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthentication();
+  }
+
+  Future<void> _checkAuthentication() async {
+    bool isAuthenticated = await checkLoginToken();
+
+    if (!isAuthenticated) {
+      // Assuming you have a named route for the login page set up
+      Navigator.of(context).pushReplacementNamed('/login');
+    }
   }
 
   @override
@@ -54,7 +73,7 @@ class _SelectionPageState extends State<SelectionPage> {
                     ? [selectedSingleFocus.last]
                     : [],
                 onPressed: (label) {
-                  setState(() async {
+                  setState(() {
                     selectedSingleFocus = [label];
                     print('Selected focus: $selectedSingleFocus');
                     // Add functionality for the selection
@@ -99,8 +118,6 @@ class _SelectionPageState extends State<SelectionPage> {
                   });
                 },
               ),
-
-              // Target
               const SizedBox(height: 16.0),
               buildTargetSelectionRow(
                 label: 'Select Target focuses:',
@@ -156,11 +173,43 @@ class _SelectionPageState extends State<SelectionPage> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: canProceedToNextPage()
-                    ? () {
-                        /*Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NamePage()),
-                        );*/
+                    ? () async {
+                        final storage = FlutterSecureStorage();
+
+                        var data = {
+                          '_id': await storage.read(key: '_id'),
+                          'email': await storage.read(key: 'email'),
+                          'sex': await storage.read(key: 'selectedGender'),
+                          // 'age_range': ,
+                          'focus': selectedSingleFocus.last,
+                          'nutrition': selectedSingleNutritionGoal.last,
+                          'level': selectedSingleLevel.last,
+                          'location': await storage.read(key: 'location'),
+                          'targetUser': {
+                            // 'sex': ,
+                            // 'age_range': ,
+                            'focus': selectedTargetFocus.last,
+                            'nutrition': selectedTargetNutritionGoal.last,
+                            'level': selectedTargetLevel.last,
+                          }
+                        };
+
+                        String? email = await storage.read(key: 'email');
+                        String? name = await storage.read(key: 'Name');
+                        print('Email from storage: $email');
+                        print('Name from storage: $name');
+
+                        var url =
+                            Uri.parse('http://159.203.142.48:8000/UserInfo');
+                        var response = await http.post(url,
+                            body: jsonEncode(data),
+                            headers: {"email": data['email'].toString()});
+
+                        if (response.statusCode == 200) {
+                          print('User info updated successfully');
+                        } else {
+                          throw Exception('Failed to update user info');
+                        }
                       }
                     : null,
                 child: const Text('Go to Home Page'),
@@ -248,11 +297,10 @@ class _SelectionPageState extends State<SelectionPage> {
   }
 
   void toggleSelection(String label, List<String> selectedList) {
-    if (selectedList.contains(label)) {
-      selectedList.remove(label);
-    } else {
-      selectedList.add(label);
-    }
+    setState(() {
+      selectedList.clear(); // Clear the list to enforce single selection
+      selectedList.add(label); // Add the newly selected item
+    });
   }
 }
 

@@ -112,11 +112,11 @@ class LoginPage extends StatelessWidget {
         MaterialPageRoute(builder: (context) => NamePage()),
       );
     } else {
-      /*showErrorDialog(
+      showErrorDialog(
         context: context,
         errorMessage: 'Invalid email or password',
         title: 'Sign-up failed',
-      );*/
+      );
     }
   }
 
@@ -142,11 +142,11 @@ class LoginPage extends StatelessWidget {
     } else {
       // Handle unsuccessful sign-in
       // You can show an error message or take appropriate action
-      /*showErrorDialog(
+      showErrorDialog(
         context: context,
         errorMessage: 'Invalid email or password',
         title: 'Sign-in failed',
-      );*/
+      );
     }
   }
 }

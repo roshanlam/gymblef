@@ -3,21 +3,41 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 Future<bool> checkLoginToken() async {
-  final storage = new FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
   String? token = await storage.read(key: 'auth_token');
+  String? email = await storage.read(key: 'email');
 
-  if (token != null) {
-    var url = Uri.parse('http://159.203.142.48:8000/auth/user');
+  if (email != null && token != null) {
+    var verifyUserUrl =
+        Uri.parse('http://159.203.142.48:8000/user/getUserInfo');
 
-    var response = await http.get(
-      url,
-      headers: {'Authorization': 'Bearer $token'},
+    // Send email to verify if user exists
+    var userResponse = await http.post(
+      verifyUserUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({'email': email}),
     );
-    if (response.statusCode == 200) {
-      return true;
-    }
-    return false;
-  }
-  return false;
 
+    // If user exists, verify the token
+    if (userResponse.statusCode == 200) {
+      var verifyTokenUrl = Uri.parse('http://159.203.142.48:8000/auth/user');
+
+      var tokenResponse = await http.get(
+        verifyTokenUrl,
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      // Return true if token is also valid (i.e., status code 200)
+      return tokenResponse.statusCode == 200;
+    } else {
+      // User does not exist or other error
+      return false;
+    }
+  }
+
+  // Either email or token was null
+  return false;
 }
