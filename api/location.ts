@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 
-export default function LocationAPI() {
+export default function () {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -18,12 +18,12 @@ export default function LocationAPI() {
     })();
   }, []);
 
-  let text = 'Waiting..';
+  let location_text = 'Waiting..';
   if (errorMsg) {
-    text = errorMsg;
+    location_text = errorMsg;
   } else if (location) {
-    text = JSON.stringify(location);
+    location_text = JSON.stringify(location);
   }
 
-  return text;
+  return location_text;
 }
