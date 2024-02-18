@@ -103,11 +103,11 @@ class LoginPage extends StatelessWidget {
     if (isRegistrationSuccessful) {
       const storage = FlutterSecureStorage();
       await storage.write(key: 'auth_token', value: responseJSON['token']);
+      await storage.write(key: 'email', value: email);
 
       Navigator.pushReplacement(
         context,
-        //MaterialPageRoute(builder: (context) => SelectionPage()),
-        MaterialPageRoute(builder: (context) => const NamePage()),
+        MaterialPageRoute(builder: (context) => NamePage()),
       );
     } else {
       /*showErrorDialog(
@@ -132,7 +132,7 @@ class LoginPage extends StatelessWidget {
     if (isSignInSuccessful) {
       const storage = FlutterSecureStorage();
       await storage.write(key: 'auth_token', value: responseJSON['token']);
-
+      await storage.write(key: 'email', value: email);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const NamePage()),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'home.dart';
 
 class SelectionPage extends StatefulWidget {
@@ -12,27 +13,24 @@ class _SelectionPageState extends State<SelectionPage> {
   List<String> selectedSingleFocus = [];
   List<String> selectedSingleLevel = [];
   List<String> selectedSingleNutritionGoal = [];
-  List<String> selectedMultipleFocus = [];
-  List<String> selectedMultipleLevel = [];
-  List<String> selectedMultipleNutritionGoal = [];
+  List<String> selectedTargetFocus = [];
+  List<String> selectedTargetLevel = [];
+  List<String> selectedTargetNutritionGoal = [];
+  final _storage = FlutterSecureStorage();
 
   bool canProceedToNextPage() {
     return selectedSingleFocus.isNotEmpty &&
         selectedSingleLevel.isNotEmpty &&
         selectedSingleNutritionGoal.isNotEmpty &&
-        selectedMultipleFocus.isNotEmpty &&
-        selectedMultipleLevel.isNotEmpty &&
-        selectedMultipleNutritionGoal.isNotEmpty;
+        selectedTargetFocus.isNotEmpty &&
+        selectedTargetLevel.isNotEmpty &&
+        selectedTargetNutritionGoal.isNotEmpty;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFF6C0C),
-      /*appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),*/
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -57,7 +55,7 @@ class _SelectionPageState extends State<SelectionPage> {
                     ? [selectedSingleFocus.last]
                     : [],
                 onPressed: (label) {
-                  setState(() {
+                  setState(() async {
                     selectedSingleFocus = [label];
                     print('Selected focus: $selectedSingleFocus');
                     // Add functionality for the selection
@@ -102,54 +100,56 @@ class _SelectionPageState extends State<SelectionPage> {
                   });
                 },
               ),
+
+              // Target
               const SizedBox(height: 16.0),
-              buildMultipleSelectionRow(
-                label: 'Select multiple focuses:',
+              buildTargetSelectionRow(
+                label: 'Select Target focuses:',
                 options: [
                   'Powerlifting',
                   'Bodybuilding',
                   'Cardio',
                   'Casual',
                 ],
-                selected: selectedMultipleFocus,
+                selected: selectedTargetFocus,
                 onPressed: (label) {
                   setState(() {
-                    toggleSelection(label, selectedMultipleFocus);
-                    print('Selected focuses: $selectedMultipleFocus');
+                    toggleSelection(label, selectedTargetFocus);
+                    print('Selected focuses: $selectedTargetFocus');
                     // Add functionality for the selection
                   });
                 },
               ),
-              buildMultipleSelectionRow(
-                label: 'Select multiple levels:',
+              buildTargetSelectionRow(
+                label: 'Select Target levels:',
                 options: [
                   'Newbie',
                   'Beginner',
                   'Intermediate',
                   'Advanced',
                 ],
-                selected: selectedMultipleLevel,
+                selected: selectedTargetLevel,
                 onPressed: (label) {
                   setState(() {
-                    toggleSelection(label, selectedMultipleLevel);
-                    print('Selected levels: $selectedMultipleLevel');
+                    toggleSelection(label, selectedTargetLevel);
+                    print('Selected levels: $selectedTargetLevel');
                     // Add functionality for the selection
                   });
                 },
               ),
-              buildMultipleSelectionRow(
-                label: 'Select multiple nutrition goals:',
+              buildTargetSelectionRow(
+                label: 'Select Target nutrition goals:',
                 options: [
                   'Cutting',
                   'Stable',
                   'Bulking',
                 ],
-                selected: selectedMultipleNutritionGoal,
+                selected: selectedTargetNutritionGoal,
                 onPressed: (label) {
                   setState(() {
-                    toggleSelection(label, selectedMultipleNutritionGoal);
+                    toggleSelection(label, selectedTargetNutritionGoal);
                     print(
-                        'Selected nutrition goals: $selectedMultipleNutritionGoal');
+                        'Selected nutrition goals: $selectedTargetNutritionGoal');
                     // Add functionality for the selection
                   });
                 },
@@ -158,13 +158,13 @@ class _SelectionPageState extends State<SelectionPage> {
               ElevatedButton(
                 onPressed: canProceedToNextPage()
                     ? () {
-                        Navigator.push(
+                        /*Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(builder: (context) => NamePage()),
                         );
                       }
                     : null,
-                child: const Text('Go to Name Page'),
+                child: const Text('Go to Home Page'),
               ),
               // Add more FocusButtons for additional selections as needed
             ],
@@ -211,7 +211,7 @@ class _SelectionPageState extends State<SelectionPage> {
     );
   }
 
-  Widget buildMultipleSelectionRow({
+  Widget buildTargetSelectionRow({
     required String label,
     required List<String> options,
     required List<String> selected,
