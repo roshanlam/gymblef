@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(FigmaToCodeApp());
-}
-
-class FigmaToCodeApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
-    );
-  }
-}
+import 'selection.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -30,12 +18,13 @@ class LoginPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 '../gimbel_assets/top.png',
                 width: MediaQuery.of(context).size.width,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 8.0),
               Text(
                 'Find Your Fit',
                 style: TextStyle(
@@ -56,7 +45,7 @@ class LoginPage extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 8.0),
               TextField(
                 controller: passwordController,
                 style: TextStyle(color: Colors.black),
@@ -72,17 +61,40 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 32.0),
               ElevatedButton(
                 onPressed: () {
-                  // Add authentication logic here
-                  // For now, let's print the entered email and password
-                  print('Email: ${emailController.text}');
-                  print('Password: ${passwordController.text}');
+                  // For simplicity, assume successful login
+                  // You should replace this with your actual authentication logic
+                  _signIn(context);
                 },
-                child: Text('Login', style: TextStyle(color: Colors.black)),
+                child: Text('Sign Up', style: TextStyle(color: Colors.white)),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // For simplicity, assume successful login
+                  // You should replace this with your actual authentication logic
+                  _signIn(context);
+                },
+                child: Text('Login', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _signIn(BuildContext context) {
+    // You should replace this with your actual authentication logic
+    // For simplicity, always consider it a successful login for now
+    bool isSignInSuccessful = true;
+
+    if (isSignInSuccessful) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => SelectionPage()),
+      );
+    } else {
+      // Handle unsuccessful sign-in
+      // You can show an error message or take appropriate action
+    }
   }
 }
