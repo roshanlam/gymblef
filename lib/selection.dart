@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'name.dart';
 
 class SelectionPage extends StatefulWidget {
   @override
@@ -12,6 +13,15 @@ class _SelectionPageState extends State<SelectionPage> {
   List<String> selectedMultipleFocus = [];
   List<String> selectedMultipleLevel = [];
   List<String> selectedMultipleNutritionGoal = [];
+
+  bool canProceedToNextPage() {
+    return selectedSingleFocus.isNotEmpty &&
+        selectedSingleLevel.isNotEmpty &&
+        selectedSingleNutritionGoal.isNotEmpty &&
+        selectedMultipleFocus.isNotEmpty &&
+        selectedMultipleLevel.isNotEmpty &&
+        selectedMultipleNutritionGoal.isNotEmpty;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +95,7 @@ class _SelectionPageState extends State<SelectionPage> {
               ),
               SizedBox(height: 16.0),
               buildMultipleSelectionRow(
-                label: 'Select your ideal buddy\'s focuses:',
+                label: 'Select multiple focuses:',
                 options: [
                   'Powerlifting',
                   'Bodybuilding',
@@ -102,7 +112,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 },
               ),
               buildMultipleSelectionRow(
-                label: 'Select your ideal buddy\'s level:',
+                label: 'Select multiple levels:',
                 options: [
                   'Newbie',
                   'Beginner',
@@ -119,7 +129,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 },
               ),
               buildMultipleSelectionRow(
-                label: 'Select your ideal buddy\'s nutritional goals:',
+                label: 'Select multiple nutrition goals:',
                 options: [
                   'Cutting',
                   'Stable',
@@ -133,6 +143,18 @@ class _SelectionPageState extends State<SelectionPage> {
                     // Add functionality for the selection
                   });
                 },
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: canProceedToNextPage()
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NamePage()),
+                        );
+                      }
+                    : null,
+                child: Text('Go to Name Page'),
               ),
               // Add more FocusButtons for additional selections as needed
             ],
@@ -196,9 +218,8 @@ class _SelectionPageState extends State<SelectionPage> {
           ),
         ),
         SizedBox(height: 16.0),
-        Wrap(
-          spacing: 16.0,
-          runSpacing: 8.0,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: options.map((option) {
             bool isSelected = selected.contains(option);
             String lowerOption = option.toLowerCase();
