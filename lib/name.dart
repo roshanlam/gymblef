@@ -27,6 +27,12 @@ class _NamePageState extends State<NamePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFF6C0C),
