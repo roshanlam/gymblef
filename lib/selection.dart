@@ -195,16 +195,16 @@ class _SelectionPageState extends State<SelectionPage> {
                           }
                         };
 
-                        String? email = await storage.read(key: 'email');
+                        String? email = data['email'].toString();
                         String? name = await storage.read(key: 'Name');
+                        String? _id = await storage.read(key: '_id');
                         print('Email from storage: $email');
                         print('Name from storage: $name');
+                        print('ID from storage: $_id');
 
                         var url =
                             Uri.parse('http://159.203.142.48:8000/UserInfo');
-                        var response = await http.post(url,
-                            body: jsonEncode(data),
-                            headers: {"email": data['email'].toString()});
+                        var response = await http.post(url, body: jsonEncode(data));
 
                         if (response.statusCode == 200) {
                           print('User info updated successfully');
