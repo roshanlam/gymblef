@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymblef/components/popup.dart';
 import 'selection.dart';
 
 class LoginPage extends StatelessWidget {
@@ -21,7 +22,7 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                '../gimbel_assets/top.png',
+                'gimbel_assets/top.png',
                 width: MediaQuery.of(context).size.width,
               ),
               SizedBox(height: 8.0),
@@ -95,6 +96,11 @@ class LoginPage extends StatelessWidget {
     } else {
       // Handle unsuccessful sign-in
       // You can show an error message or take appropriate action
+      showErrorDialog(
+        context: context,
+        errorMessage: 'Invalid email or password',
+        title: 'Sign-in failed',
+      );
     }
   }
 }

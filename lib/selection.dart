@@ -29,7 +29,7 @@ class _SelectionPageState extends State<SelectionPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                '../gimbel_assets/top.png',
+                'gimbel_assets/top.png',
                 width: MediaQuery.of(context).size.width,
               ),
               SizedBox(height: 16.0),
@@ -41,7 +41,9 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Cardio',
                   'Casual',
                 ],
-                selected: selectedSingleFocus.isNotEmpty ? [selectedSingleFocus.last] : [],
+                selected: selectedSingleFocus.isNotEmpty
+                    ? [selectedSingleFocus.last]
+                    : [],
                 onPressed: (label) {
                   setState(() {
                     selectedSingleFocus = [label];
@@ -58,7 +60,9 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Intermediate',
                   'Advanced',
                 ],
-                selected: selectedSingleLevel.isNotEmpty ? [selectedSingleLevel.last] : [],
+                selected: selectedSingleLevel.isNotEmpty
+                    ? [selectedSingleLevel.last]
+                    : [],
                 onPressed: (label) {
                   setState(() {
                     selectedSingleLevel = [label];
@@ -74,11 +78,14 @@ class _SelectionPageState extends State<SelectionPage> {
                   'Stable',
                   'Bulking',
                 ],
-                selected: selectedSingleNutritionGoal.isNotEmpty ? [selectedSingleNutritionGoal.last] : [],
+                selected: selectedSingleNutritionGoal.isNotEmpty
+                    ? [selectedSingleNutritionGoal.last]
+                    : [],
                 onPressed: (label) {
                   setState(() {
                     selectedSingleNutritionGoal = [label];
-                    print('Selected nutrition goal: $selectedSingleNutritionGoal');
+                    print(
+                        'Selected nutrition goal: $selectedSingleNutritionGoal');
                     // Add functionality for the selection
                   });
                 },
@@ -129,7 +136,8 @@ class _SelectionPageState extends State<SelectionPage> {
                 onPressed: (label) {
                   setState(() {
                     toggleSelection(label, selectedMultipleNutritionGoal);
-                    print('Selected nutrition goals: $selectedMultipleNutritionGoal');
+                    print(
+                        'Selected nutrition goals: $selectedMultipleNutritionGoal');
                     // Add functionality for the selection
                   });
                 },
@@ -165,7 +173,7 @@ class _SelectionPageState extends State<SelectionPage> {
             bool isSelected = selected.contains(option);
             String lowerOption = option.toLowerCase();
             return FocusButton(
-              imagePath: '../gimbel_assets/$lowerOption.png',
+              imagePath: 'gimbel_assets/$lowerOption.png',
               label: option,
               onPressed: (label) {
                 onPressed(label);
@@ -203,7 +211,7 @@ class _SelectionPageState extends State<SelectionPage> {
             bool isSelected = selected.contains(option);
             String lowerOption = option.toLowerCase();
             return FocusButton(
-              imagePath: '../gimbel_assets/$lowerOption.png',
+              imagePath: 'gimbel_assets/$lowerOption.png',
               label: option,
               onPressed: (label) {
                 onPressed(label);
