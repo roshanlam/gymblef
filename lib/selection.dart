@@ -2,8 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+<<<<<<< HEAD
 import 'package:http/http.dart' as http;
 import 'package:gymblef/components/util.dart';
+=======
+import 'home.dart';
+>>>>>>> 2ed5a5df0e00b2066c03376872a62d8fa207bf8a
 
 class SelectionPage extends StatefulWidget {
   const SelectionPage({super.key});
@@ -173,6 +177,7 @@ class _SelectionPageState extends State<SelectionPage> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: canProceedToNextPage()
+<<<<<<< HEAD
                     ? () async {
                         final storage = FlutterSecureStorage();
 
@@ -210,6 +215,13 @@ class _SelectionPageState extends State<SelectionPage> {
                         } else {
                           throw Exception('Failed to update user info');
                         }
+=======
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+>>>>>>> 2ed5a5df0e00b2066c03376872a62d8fa207bf8a
                       }
                     : null,
                 child: const Text('Go to Home Page'),

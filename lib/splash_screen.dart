@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // If the login is valid, navigate to another page.
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SelectionPage()),
+        MaterialPageRoute(builder: (context) => const SelectionPage()),
       );
     } else {
       // If the login is not valid, navigate to the LoginPage.

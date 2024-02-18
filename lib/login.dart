@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymblef/components/popup.dart';
 import 'name.dart';
-import 'selection.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -103,7 +101,7 @@ class LoginPage extends StatelessWidget {
     bool isRegistrationSuccessful = responseJSON['success'];
 
     if (isRegistrationSuccessful) {
-      final storage = FlutterSecureStorage();
+      const storage = FlutterSecureStorage();
       await storage.write(key: 'auth_token', value: responseJSON['token']);
       await storage.write(key: 'email', value: email);
 
@@ -132,12 +130,12 @@ class LoginPage extends StatelessWidget {
     bool isSignInSuccessful = responseJSON['success'];
 
     if (isSignInSuccessful) {
-      final storage = FlutterSecureStorage();
+      const storage = FlutterSecureStorage();
       await storage.write(key: 'auth_token', value: responseJSON['token']);
       await storage.write(key: 'email', value: email);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => NamePage()),
+        MaterialPageRoute(builder: (context) => const NamePage()),
       );
     } else {
       // Handle unsuccessful sign-in

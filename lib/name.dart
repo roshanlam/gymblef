@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'selection.dart';
 
 class NamePage extends StatefulWidget {
-  NamePage({Key? key}) : super(key: key);
+  const NamePage({super.key});
 
   @override
   _NamePageState createState() => _NamePageState();
@@ -11,7 +11,7 @@ class NamePage extends StatefulWidget {
 
 class _NamePageState extends State<NamePage> {
   final TextEditingController NameController = TextEditingController();
-  final _storage = FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
   final List<String> genderOptions = ['Male', 'Female', 'Other'];
   String? selectedGender;
@@ -67,12 +67,12 @@ class _NamePageState extends State<NamePage> {
 
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => SelectionPage()),
+                      MaterialPageRoute(builder: (context) => const SelectionPage()),
                     );
                   }
                 },
                 // put NameController text and selectedGender in the list of dependencies
-                child: Text('Proceed'),
+                child: const Text('Proceed'),
               )
             ],
           ),
