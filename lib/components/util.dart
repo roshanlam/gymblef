@@ -1,12 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 Future<bool> checkLoginToken() async {
-<<<<<<< HEAD
   final storage = FlutterSecureStorage();
-=======
-  const storage = FlutterSecureStorage();
->>>>>>> 2ed5a5df0e00b2066c03376872a62d8fa207bf8a
   String? token = await storage.read(key: 'auth_token');
   String? email = await storage.read(key: 'email');
 
