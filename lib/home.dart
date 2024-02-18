@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:gymblef/components/util.dart';
 import 'profile.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,8 @@ dynamic getAllMatches() async {
   var responseJSON = jsonDecode(response.body);
 
   var matchingUsers = responseJSON['matchingUsers'];
-  matchingUsers.sort((a, b) => b.compatibility.compareTo(a.compatibility));
+  matchingUsers = matchingUsers.sort((a, b) => b.compatibility.compareTo(a.compatibility));
+  matchingUsers = matchingUsers.map((user) => fetchUserInfo(user['email']));
   return matchingUsers;
 }
 dynamic getNextMatch() async {

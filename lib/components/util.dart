@@ -22,3 +22,10 @@ Future<bool> checkLoginToken() async {
   return false;
 
 }
+
+Future<dynamic> fetchUserInfo(email) async {
+  var url = Uri.parse('http://159.203.142.48:8000/user/getUserInfo');
+  var response = await http.get(url, headers: { 'email': email });
+  var responseJSON = jsonDecode(response.body);
+  return responseJSON;
+}
