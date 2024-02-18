@@ -7,10 +7,12 @@ class NamePage extends StatelessWidget {
   final List<String> genderOptions = ['Male', 'Female', 'Other'];
   String selectedGender = '';
 
+  NamePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFF6C0C),
+      backgroundColor: const Color(0xFFFF6C0C),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -26,12 +28,12 @@ class NamePage extends StatelessWidget {
                 '../gimbel_assets/top.png',
                 width: MediaQuery.of(context).size.width,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               buildTextField('First Name', firstNameController),
               buildTextField('Last Name', lastNameController),
               buildTextField('Preferred Name', preferredNameController),
               buildGenderDropdown(),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   // Validate inputs and proceed if valid
@@ -43,7 +45,7 @@ class NamePage extends StatelessWidget {
                     print('Selected Gender: $selectedGender');
                   }
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),
@@ -57,13 +59,13 @@ class NamePage extends StatelessWidget {
       height: 80.0,
       child: TextField(
         controller: controller,
-        style: TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(color: Colors.black),
+          labelStyle: const TextStyle(color: Colors.black),
           fillColor: Colors.white,
           filled: true,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -73,7 +75,7 @@ class NamePage extends StatelessWidget {
     return SizedBox(
       height: 80.0,
       child: DropdownButtonFormField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'Gender',
           labelStyle: TextStyle(color: Colors.black),
           fillColor: Colors.white,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'name.dart';
 
 class SelectionPage extends StatefulWidget {
+  const SelectionPage({super.key});
+
   @override
   _SelectionPageState createState() => _SelectionPageState();
 }
@@ -26,7 +28,7 @@ class _SelectionPageState extends State<SelectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFF6C0C),
+      backgroundColor: const Color(0xFFFF6C0C),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -42,7 +44,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 'gimbel_assets/top.png',
                 width: MediaQuery.of(context).size.width,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               buildSingleSelectionRow(
                 label: 'What is your focus?',
                 options: [
@@ -100,7 +102,7 @@ class _SelectionPageState extends State<SelectionPage> {
                   });
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               buildMultipleSelectionRow(
                 label: 'Select multiple focuses:',
                 options: [
@@ -152,7 +154,7 @@ class _SelectionPageState extends State<SelectionPage> {
                   });
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: canProceedToNextPage()
                     ? () {
@@ -162,7 +164,7 @@ class _SelectionPageState extends State<SelectionPage> {
                         );
                       }
                     : null,
-                child: Text('Go to Name Page'),
+                child: const Text('Go to Name Page'),
               ),
               // Add more FocusButtons for additional selections as needed
             ],
@@ -182,13 +184,13 @@ class _SelectionPageState extends State<SelectionPage> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: options.map((option) {
@@ -204,7 +206,7 @@ class _SelectionPageState extends State<SelectionPage> {
             );
           }).toList(),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -219,13 +221,13 @@ class _SelectionPageState extends State<SelectionPage> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: options.map((option) {
@@ -241,7 +243,7 @@ class _SelectionPageState extends State<SelectionPage> {
             );
           }).toList(),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -261,7 +263,7 @@ class FocusButton extends StatelessWidget {
   final Function(String)? onPressed;
   final bool isSelected;
 
-  const FocusButton({
+  const FocusButton({super.key, 
     required this.imagePath,
     required this.label,
     this.onPressed,
@@ -295,10 +297,10 @@ class FocusButton extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 14.0,
           ),

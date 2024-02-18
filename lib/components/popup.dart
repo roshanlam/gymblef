@@ -17,7 +17,7 @@ void showErrorDialog({
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(errorIcon, color: Colors.red), // Error icon in red
-            SizedBox(width: 10), // Spacing between the icon and the message
+            const SizedBox(width: 10), // Spacing between the icon and the message
             Expanded(child: Text(errorMessage)), // The error message
           ],
         ),
