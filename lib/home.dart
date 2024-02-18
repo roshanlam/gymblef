@@ -1,9 +1,26 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'profile.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
 }
+
+int currentIndex = 0;
+Future<String> getNextMatch() async {
+  const FlutterSecureStorage storage = FlutterSecureStorage();
+  var email = (await storage.read(key: 'email')) ?? '';
+
+  var url = Uri.parse('http://159.203.142.48:8000/user/getBuddies');
+  var response = await http.get(url, headers: { 'email': email });
+  var responseJSON = jsonDecode(response.body);
+  var matchingUsers = responseJSON['matchingUsers'];
+  return matchingUsers[currentIndex++ % matchingUsers.length]['email'];
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
