@@ -178,14 +178,14 @@ class _SelectionPageState extends State<SelectionPage> {
                         final storage = FlutterSecureStorage();
 
                         var data = {
-                          '_id': await storage.read(key: '_id'),
+                          // '_id': await storage.read(key: '_id'),
                           'email': await storage.read(key: 'email'),
                           'sex': await storage.read(key: 'selectedGender'),
                           // 'age_range': ,
                           'focus': selectedSingleFocus.last,
                           'nutrition': selectedSingleNutritionGoal.last,
                           'level': selectedSingleLevel.last,
-                          'location': await storage.read(key: 'location'),
+                          // 'location': await storage.read(key: 'location'),
                           'targetUser': {
                             // 'sex': ,
                             // 'age_range': ,
@@ -202,9 +202,28 @@ class _SelectionPageState extends State<SelectionPage> {
                         print('Name from storage: $name');
                         print('ID from storage: $_id');
 
+                        print(jsonEncode(data));
+
                         var url =
                             Uri.parse('http://159.203.142.48:8000/UserInfo');
-                        var response = await http.post(url, body: jsonEncode(data));
+                        var response = await http.post(url, body: {
+                          'email': await storage.read(key: 'email'),
+                          'sex': await storage.read(key: 'selectedGender'),
+                          // 'age_range': ,
+                          'focus': selectedSingleFocus.last,
+                          'nutrition': selectedSingleNutritionGoal.last,
+                          'level': selectedSingleLevel.last,
+                          // 'location': await storage.read(key: 'location'),
+                          'targetUser': jsonEncode({
+                            // 'sex': ,
+                            // 'age_range': ,
+                            'focus': selectedTargetFocus.last,
+                            'nutrition': selectedTargetNutritionGoal.last,
+                            'level': selectedTargetLevel.last,
+                          })
+                          },
+                        );
+                        
 
                         if (response.statusCode == 200) {
                           print('User info updated successfully');
